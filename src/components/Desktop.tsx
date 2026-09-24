@@ -1,9 +1,9 @@
 import {
-  useEffect,
   useRef,
   useState,
   type ReactNode,
 } from "react";
+
 
 import type { ModalType } from "./Modal";
 
@@ -213,8 +213,6 @@ export default function Desktop({
     */
 
     const windowWidth = 650;
-    const windowHeight = 430;
-
     const minVisible = 80;
 
 
@@ -304,7 +302,7 @@ export default function Desktop({
       >
 
         <div className="window-title">
-        Tashawna's Portfolio
+        Tashawna
         </div>
 
 

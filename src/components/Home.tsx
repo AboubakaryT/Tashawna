@@ -43,7 +43,7 @@ export default function Home({ onOpen }: HomeProps) {
       <section className="intro">
 
         <h1>
-          hi! <span>i'm Tashawna</span>
+          hi! <span>Tashawna</span>
         </h1>
 
         <p>

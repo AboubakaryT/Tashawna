@@ -1424,7 +1424,7 @@ body {
 
   font-family: inherit;
 
-  text-align: left;
+  text-align: center;
 
   cursor: pointer;
 
@@ -1439,34 +1439,31 @@ body {
 }
 
 
-.portfolio-card:hover {
-  transform:
-    translateY(-3px);
+.portfolio-card-info {
+  display: flex;
 
-  border-color: #d598a7;
+  flex-direction: column;
 
-  box-shadow:
-    4px 5px 0
-    rgba(70, 87, 67, 0.14);
+  gap: 3px;
+
+  align-items: center;
+
+  padding:
+    8px
+    5px
+    5px;
 }
 
-
-.portfolio-card:active {
-  transform:
-    translateY(-1px)
-    scale(0.99);
-}
-
-
-/* =====================================================
-   PORTFOLIO IMAGE
-===================================================== */
 
 .portfolio-image-wrapper {
   position: relative;
 
   width: 100%;
   height: 95px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   overflow: hidden;
 
@@ -1487,6 +1484,8 @@ body {
 
   object-fit: cover;
 
+  background: transparent;
+
   transition:
     transform 0.3s ease,
     filter 0.3s ease;
@@ -1495,7 +1494,7 @@ body {
 .portfolio-image-wide {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   background: transparent;
 }
 
@@ -1503,264 +1502,47 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(70vh + 35px);
+  width: 100%;
+  height: auto;
+  max-height: 75vh;
   overflow: visible;
+  background: transparent;
 }
-
-
-/* =====================================================
-   VIEW PROJECT HOVER
-===================================================== */
-
-.portfolio-hover {
-  position: absolute;
-
-  inset: 0;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  opacity: 0;
-
-  background:
-    rgba(63, 81, 60, 0.17);
-
-  transition:
-    opacity 0.2s ease;
-}
-
-
-.portfolio-hover span {
-  padding:
-    5px
-    9px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.9);
-
-  border-radius: 20px;
-
-  background:
-    rgba(255, 250, 245, 0.94);
-
-  color: #465743;
-
-  font-size: 9px;
-
-  letter-spacing: 0.5px;
-}
-
-
-.portfolio-card:hover .portfolio-hover {
-  opacity: 1;
-}
-
-
-/* =====================================================
-   PORTFOLIO CARD INFORMATION
-===================================================== */
-
-.portfolio-card-info {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 3px;
-
-  padding:
-    8px
-    5px
-    5px;
-}
-
-
-.portfolio-card-info strong {
-  overflow: hidden;
-
-  color: #465743;
-
-  font-size: 10px;
-
-  font-weight: 600;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-}
-
-
-.portfolio-card-info span {
-  color: #b17885;
-
-  font-size: 8px;
-}
-
-
-/* =====================================================
-   SELECTED PROJECT OVERLAY
-===================================================== */
-
-.project-showcase-overlay {
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 5000;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-
-
-  /*
-    Lets you still see the desktop
-    and portfolio underneath.
-  */
-  background:
-    rgba(40, 49, 38, 0.42);
-
-  animation:
-    showcaseFade 0.17s ease;
-}
-
-
-@keyframes showcaseFade {
-
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-
-}
-
-
-/* =====================================================
-   SELECTED PROJECT WINDOW
-===================================================== */
 
 .project-showcase {
   position: relative;
 
-  /*
-    Intentionally much smaller than before.
-  */
-  
   display: flex;
+  align-items: center;
+  justify-content: center;
 
   flex-direction: column;
 
   overflow: hidden;
 
-  border: 1px solid #465743;
+  border: none;
 
-  border-radius: 7px;
+  border-radius: 0;
 
-  background: #fffaf5;
+  background: transparent;
 
   color: #465743;
 
-  box-shadow:
-    7px
-    9px
-    0
-    rgba(45, 58, 43, 0.16),
-    0
-    15px
-    40px
-    rgba(0, 0, 0, 0.2);
+  box-shadow: none;
 
   animation:
     projectPop 0.18s ease;
 }
 
-.project-showcase-wide {
-  width: min(90vw, 760px);
-}
-
-
-@keyframes projectPop {
-
-  from {
-    opacity: 0;
-
-    transform:
-      translateY(5px)
-      scale(0.97);
-  }
-
-  to {
-    opacity: 1;
-
-    transform:
-      translateY(0)
-      scale(1);
-  }
-
-}
-
-
-/* =====================================================
-   PROJECT WINDOW TOP BAR
-===================================================== */
-
-
-
-/* =====================================================
-   PROJECT IMAGE AREA
-===================================================== */
-
-.project-showcase-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(70vh + 35px);
-  overflow: visible;
-}
-
-
-/* =====================================================
-   PROJECT IMAGE SCROLLBAR
-===================================================== */
-
-.project-showcase-image::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-}
-
-
-.project-showcase-image::-webkit-scrollbar-track {
-  background: #eee1df;
-}
-
-
-.project-showcase-image::-webkit-scrollbar-thumb {
-  background: #d999a8;
-
-  border-radius: 10px;
-
-  border:
-    2px solid #eee1df;
-}
-
-
-/* =====================================================
-   SELECTED PROJECT IMAGE
-===================================================== */
-
 .project-showcase-photo {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
-  max-height: 70vh;
-  object-fit: cover;
+  max-height: 75vh;
+  margin: 0 auto;
+  object-fit: contain;
+  background: transparent;
 }
 
 .project-showcase-photo-wide {
@@ -2129,4 +1911,43 @@ button:focus-visible {
   font-size: 11px;
   letter-spacing: 0.8px;
   text-align: center;
+}
+
+/* =====================================================
+   PORTFOLIO FOLDER SELECTOR
+===================================================== */
+
+.portfolio-folder-chooser {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 8px auto 18px;
+  max-width: 520px;
+}
+
+.portfolio-folder-chooser .portfolio-entry-button {
+  flex: 1 1 180px;
+  min-width: 150px;
+  max-width: 220px;
+}
+
+/* =====================================================
+   PROJECT SHOWCASE OVERLAY
+===================================================== */
+
+.project-showcase-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 110;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(18, 22, 17, 0.28);
 }

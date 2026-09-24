@@ -1,11 +1,14 @@
 import chiikawa from "../assets/ChiikawaGif.gif";
 
-import amyBanner from "../assets/Amy Putman_Tashawna_Banner.jpg";
-import brianBanner from "../assets/Banner_Brian Keeler_Tashawna.jpg";
-import brianKeeler from "../assets/Brian Keeler_Tashawna.jpg";
-import image from "../assets/image.jpeg";
-import keithVogrin from "../assets/Keith Vogrin Thumbnail_Anderson 2.jpg";
-import rituBajaj from "../assets/Ritu Bajaj_Tashawna.jpg";
+import amyBanner from "../assets/Alfa-Art/Amy Putman_Tashawna_Banner.jpg";
+import brianBanner from "../assets/Alfa-Art/Banner_Brian Keeler_Tashawna.jpg";
+import brianKeeler from "../assets/Alfa-Art/Brian Keeler_Tashawna.jpg";
+import image from "../assets/Alfa-Art/image.jpeg";
+import keithVogrin from "../assets/Alfa-Art/Keith Vogrin Thumbnail_Anderson 2.jpg";
+import rituBajaj from "../assets/Alfa-Art/Ritu Bajaj_Tashawna.jpg";
+import ubAcmFallGbm from "../assets/ubACM/fallgbm.png";
+import ubAcmResumeRoast from "../assets/ubACM/resumeroastfixed.webp";
+import ubAcmEventGraphic from "../assets/ubACM/ACM_WEBSITE_VER.webp";
 
 import {
   useEffect,
@@ -36,6 +39,13 @@ type PortfolioProject = {
 };
 
 
+type PortfolioFolder = {
+  id: string;
+  label: string;
+  projects: PortfolioProject[];
+};
+
+
 const modalInfo = {
   about: {
     title: "About Me",
@@ -59,7 +69,7 @@ const modalInfo = {
 };
 
 
-const portfolioProjects: PortfolioProject[] = [
+const alfaArtGalleryProjects: PortfolioProject[] = [
   {
     title: "Pigmented Perceptions",
     category: "Banner Design",
@@ -104,6 +114,42 @@ const portfolioProjects: PortfolioProject[] = [
 ];
 
 
+const ubAcmProjects: PortfolioProject[] = [
+  {
+    title: "UB ACM Fall GBM",
+    category: "Event Poster",
+    image: ubAcmFallGbm,
+    wide: true,
+  },
+  {
+    title: "UB ACM Resume Roast",
+    category: "Event Poster",
+    image: ubAcmResumeRoast,
+    wide: true,
+  },
+  {
+    title: "UB ACM Event Graphic",
+    category: "Event Poster",
+    image: ubAcmEventGraphic,
+    wide: true,
+  },
+];
+
+
+const portfolioFolders: PortfolioFolder[] = [
+  {
+    id: "alfa-art-gallery",
+    label: "Alfa-Art-Gallery",
+    projects: alfaArtGalleryProjects,
+  },
+  {
+    id: "ub-acm",
+    label: "UB ACM",
+    projects: ubAcmProjects,
+  },
+];
+
+
 /*
   =====================================================
   MODAL
@@ -138,11 +184,15 @@ export default function Modal({
 
 
   /*
-    Show the portfolio gallery only after
-    opening the Alfa-Art-Gallery folder.
+    Selected folder for the portfolio content.
   */
 
-  const [showPortfolioGallery, setShowPortfolioGallery] = useState(false);
+  const [selectedPortfolioFolderId, setSelectedPortfolioFolderId] = useState<string | null>(null);
+
+  const selectedPortfolioFolder =
+    portfolioFolders.find(
+      (folder) => folder.id === selectedPortfolioFolderId
+    ) ?? null;
 
 
   /*
@@ -174,7 +224,7 @@ export default function Modal({
   useEffect(() => {
     setPosition(null);
     setSelectedProject(null);
-    setShowPortfolioGallery(false);
+    setSelectedPortfolioFolderId(null);
   }, [type]);
 
 
@@ -533,84 +583,78 @@ export default function Modal({
           {type === "portfolio" && (
             <>
 
-              {!showPortfolioGallery && (
-                <button
-                  type="button"
-                  className="portfolio-entry-button"
-                  onClick={() => setShowPortfolioGallery(true)}
-                >
-                  <div className="portfolio-entry-folder" aria-hidden="true">
-                    <div className="folder-tab" />
-                  </div>
+              {/* FOLDER SELECTOR */}
 
-                  <span className="portfolio-entry-label">
-                    Alfa-Art-Gallery
-                  </span>
-                </button>
+              {!selectedPortfolioFolder && (
+                <div className="portfolio-folder-chooser">
+
+                  {portfolioFolders.map((folder) => (
+                    <button
+                      key={folder.id}
+                      type="button"
+                      className="portfolio-entry-button"
+                      onClick={() => setSelectedPortfolioFolderId(folder.id)}
+                    >
+                      <div className="portfolio-entry-folder" aria-hidden="true">
+                        <div className="folder-tab" />
+                      </div>
+
+                      <span className="portfolio-entry-label">
+                        {folder.label}
+                      </span>
+                    </button>
+                  ))}
+
+                </div>
               )}
 
-              {showPortfolioGallery && (
+              {selectedPortfolioFolder && selectedPortfolioFolder.projects.length > 0 && (
                 <div className="portfolio-gallery">
 
-                  {portfolioProjects.map(
-                    (project) => (
+                  {selectedPortfolioFolder.projects.map((project) => (
+                    <button
+                      key={`${selectedPortfolioFolder.id}-${project.title}-${project.category}`}
+                      className="portfolio-card"
+                      type="button"
+                      onClick={() => setSelectedProject(project)}
+                    >
 
-                      <button
-                        key={project.title}
+                      <div className={
+                        project.wide
+                          ? "portfolio-image-wrapper portfolio-image-wrapper-wide"
+                          : "portfolio-image-wrapper"
+                      }>
 
-                        className="portfolio-card"
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className={
+                            project.wide
+                              ? "portfolio-image portfolio-image-wide"
+                              : "portfolio-image"
+                          }
+                        />
 
-                        type="button"
-
-                        onClick={() =>
-                          setSelectedProject(project)
-                        }
-                      >
-
-                        <div className={
-                          project.wide
-                            ? "portfolio-image-wrapper portfolio-image-wrapper-wide"
-                            : "portfolio-image-wrapper"
-                        }>
-
-                          <img
-                            src={project.image}
-                            alt={project.title}
-                            className={
-                              project.wide
-                                ? "portfolio-image portfolio-image-wide"
-                                : "portfolio-image"
-                            }
-                          />
-
-
-                          <div className="portfolio-hover">
-
-                            <span>
-                              view project
-                            </span>
-
-                          </div>
-
-                        </div>
-
-
-                        <div className="portfolio-card-info">
-
-                          <strong>
-                            {project.title}
-                          </strong>
-
+                        <div className="portfolio-hover">
                           <span>
-                            {project.category}
+                            view project
                           </span>
-
                         </div>
 
-                      </button>
+                      </div>
 
-                    )
-                  )}
+                      <div className="portfolio-card-info">
+                        <strong>
+                          {project.title}
+                        </strong>
+
+                        <span>
+                          {project.category}
+                        </span>
+                      </div>
+
+                    </button>
+                  ))}
 
                 </div>
               )}
@@ -650,6 +694,7 @@ export default function Modal({
               <button
                 className="resume-button"
                 type="button"
+                onClick={() => window.open('/resume.pdf', '_blank', 'noopener,noreferrer')}
               >
                 View Resume
               </button>
@@ -671,9 +716,13 @@ export default function Modal({
         <div
           className="project-showcase-overlay"
 
-          onClick={(event) => {
-            event.stopPropagation();
-            setSelectedProject(null);
+          onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+            const target = event.target as HTMLElement | null;
+
+            // Close unless the click was directly on the image element.
+            if (!target || !target.closest('.project-showcase-photo')) {
+              setSelectedProject(null);
+            }
           }}
         >
 
@@ -682,10 +731,6 @@ export default function Modal({
               selectedProject.wide
                 ? "project-showcase project-showcase-wide"
                 : "project-showcase"
-            }
-
-            onClick={(event) =>
-              event.stopPropagation()
             }
           >
             {/* Large image */}
