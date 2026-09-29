@@ -1472,6 +1472,34 @@ body {
   background: #eee5df;
 }
 
+.portfolio-hover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: rgba(70, 87, 67, 0.46);
+  color: #fffaf5;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.portfolio-card:hover .portfolio-hover,
+.portfolio-card:focus-visible .portfolio-hover {
+  opacity: 1;
+}
+
+.portfolio-hover span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .portfolio-image-wrapper-wide {
   background: transparent;
 }
