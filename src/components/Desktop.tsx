@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useRef,
   useState,
   type ReactNode,
@@ -69,6 +70,35 @@ export default function Desktop({
   darkMode,
   onToggleTheme,
 }: DesktopProps) {
+
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, []);
+
+
+  const localTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  const timeText = new Intl.DateTimeFormat(undefined, {
+    timeZone: localTimeZone,
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(now);
+
+  const dateText = new Intl.DateTimeFormat(undefined, {
+    timeZone: localTimeZone,
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
+  }).format(now);
+
 
   /*
     Position of the desktop window.
@@ -501,11 +531,11 @@ export default function Desktop({
             <div className="clock">
 
               <span className="clock-time">
-                11:11 AM
+                {timeText}
               </span>
 
               <span className="clock-date">
-                05/20/2024
+                {dateText}
               </span>
 
             </div>
